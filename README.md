@@ -139,4 +139,4 @@ function scheduleShootingStar() {
 ```
 
 ---
-*Created with ❤️ by Trae AI*
+*Created with ❤️ by AI*
