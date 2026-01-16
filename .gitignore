@@ -1,0 +1,43 @@
+# 核心：忽略Node.js依赖目录（这是你最核心的需求）
+node_modules/
+
+# 忽略npm相关的日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# 忽略npm的本地缓存目录
+.npm
+
+# 忽略node-gyp构建生成的文件
+node-gyp/
+
+# 忽略yarn的缓存文件
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# 忽略环境变量文件（包含敏感信息，如密钥、数据库配置等）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 忽略构建/打包产物（根据你的项目框架调整，比如React/Vue/Next.js的构建目录）
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+
+# 忽略编辑器/IDE生成的配置文件（可选，但建议包含，避免不同编辑器的配置冲突）
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store  # Mac系统的隐藏文件
