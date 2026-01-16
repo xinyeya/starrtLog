@@ -471,7 +471,7 @@ $(document).ready(function() {
                 
                 // 复制按钮逻辑
                 $copyBtn.off('click').click(function() {
-                    navigator.clipboard.writeText(shareUrl).then(function() {
+                    const onSuccess = function() {
                         const originalHtml = $copyBtn.html();
                         $copyBtn.html('<i class="fas fa-check"></i>');
                         
@@ -481,7 +481,42 @@ $(document).ready(function() {
                         toast.show();
 
                         setTimeout(() => $copyBtn.html(originalHtml), 2000);
-                    });
+                    };
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(shareUrl).then(onSuccess).catch(err => {
+                            console.error('Failed to copy: ', err);
+                            // 如果 clipboard API 失败，尝试 fallback
+                            fallbackCopyTextToClipboard(shareUrl);
+                        });
+                    } else {
+                        fallbackCopyTextToClipboard(shareUrl);
+                    }
+
+                    function fallbackCopyTextToClipboard(text) {
+                        var textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        
+                        // 避免页面滚动
+                        textArea.style.top = "0";
+                        textArea.style.left = "0";
+                        textArea.style.position = "fixed";
+                        textArea.style.opacity = "0";
+
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+
+                        try {
+                            var successful = document.execCommand('copy');
+                            if(successful) onSuccess();
+                        } catch (err) {
+                            console.error('Fallback: Oops, unable to copy', err);
+                            alert('复制失败，请手动复制链接');
+                        }
+
+                        document.body.removeChild(textArea);
+                    }
                 });
 
             } else {
