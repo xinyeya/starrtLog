@@ -253,6 +253,20 @@ $(document).ready(function() {
             });
     });
 
+    // 切换密码可见性
+    $('#togglePassword').click(function() {
+        const input = $('#passwordInput');
+        const icon = $(this).find('i');
+        
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            input.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+
     // 登出逻辑
     $('#logoutBtn').click(function() {
         $.post('/api/logout', function() {
@@ -460,6 +474,12 @@ $(document).ready(function() {
                     navigator.clipboard.writeText(shareUrl).then(function() {
                         const originalHtml = $copyBtn.html();
                         $copyBtn.html('<i class="fas fa-check"></i>');
+                        
+                        // Show Starry Toast
+                        const toastEl = document.getElementById('starryToast');
+                        const toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+
                         setTimeout(() => $copyBtn.html(originalHtml), 2000);
                     });
                 });
